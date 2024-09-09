@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key Page</title>
+    <script>
+        // Gửi tín hiệu đến ứng dụng C# khi trang được mở
+        function notifyApp() {
+            fetch("https://tngaming123.github.io/test/", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ status: 'opened' })
+            });
+        }
+
+        // Đóng trang web sau một khoảng thời gian ngắn
+        function closePage() {
+            setTimeout(function() {
+                window.close();
+            }, 1000); // Đợi 1 giây trước khi đóng
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            notifyApp();
+            closePage();
+        });
+    </script>
+</head>
+<body>
+    <h1>Your Key:</h1>
+    <p id="key-placeholder">Loading...</p>
+    <script>
+        // Lấy key từ tham số URL và hiển thị
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        const key = getQueryParam('key');
+        if (key) {
+            document.getElementById('key-placeholder').innerText = key;
+        } else {
+            document.getElementById('key-placeholder').innerText = 'No key provided.';
+        }
+    </script>
+</body>
+</html>
